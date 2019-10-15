@@ -1,0 +1,129 @@
+The load tests were done using Apache Benchmark, the results are quite good but far better using -k option to enable KeepAlive feature 
+especially with absence of any dynamic content.
+Summary:
+Requests per second:    68.79 [#/sec] (mean)
+Time per request:       14.536 [ms] (mean, across all concurrent requests)
+99%    286
+with -k:
+Requests per second:    3022.78 [#/sec] (mean)
+Time per request:       0.331 [ms] (mean, across all concurrent requests)
+  99%     12
+ 100%    134 (longest request)
+ 
+ Please find below full details:
+
+[root@docker Breakout6]# ab -n 10000 -c 10 https://www.breakout.ma/index.html
+This is ApacheBench, Version 2.3 <$Revision: 1430300 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking www.breakout.ma (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Apache/2.4.6
+Server Hostname:        www.breakout.ma
+Server Port:            443
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES256-GCM-SHA384,4096,256
+
+Document Path:          /index.html
+Document Length:        760 bytes
+
+Concurrency Level:      10
+Time taken for tests:   145.363 seconds
+Complete requests:      10000
+Failed requests:        0
+Write errors:           0
+Total transferred:      10160000 bytes
+HTML transferred:       7600000 bytes
+Requests per second:    68.79 [#/sec] (mean)
+Time per request:       145.363 [ms] (mean)
+Time per request:       14.536 [ms] (mean, across all concurrent requests)
+Transfer rate:          68.26 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       15  110  48.3    117    1143
+Processing:     1   35  36.9     20     500
+Waiting:        1   35  36.5     19     498
+Total:         17  145  51.6    139    1278
+
+Percentage of the requests served within a certain time (ms)
+  50%    139
+  66%    147
+  75%    153
+  80%    161
+  90%    186
+  95%    211
+  98%    241
+  99%    286
+ 100%   1278 (longest request)
+ # Same test with -k parameter to enable HTTP KeepAlive feature
+[root@docker Breakout6]# ab -n 10000 -c 10 -k https://www.breakout.ma/index.html
+This is ApacheBench, Version 2.3 <$Revision: 1430300 $>
+Copyright 1996 Adam Twiss, Zeus Technology Ltd, http://www.zeustech.net/
+Licensed to The Apache Software Foundation, http://www.apache.org/
+
+Benchmarking www.breakout.ma (be patient)
+Completed 1000 requests
+Completed 2000 requests
+Completed 3000 requests
+Completed 4000 requests
+Completed 5000 requests
+Completed 6000 requests
+Completed 7000 requests
+Completed 8000 requests
+Completed 9000 requests
+Completed 10000 requests
+Finished 10000 requests
+
+
+Server Software:        Apache/2.4.6
+Server Hostname:        www.breakout.ma
+Server Port:            443
+SSL/TLS Protocol:       TLSv1.2,ECDHE-RSA-AES256-GCM-SHA384,4096,256
+
+Document Path:          /index.html
+Document Length:        760 bytes
+
+Concurrency Level:      10
+Time taken for tests:   3.308 seconds
+Complete requests:      10000
+Failed requests:        0
+Write errors:           0
+Keep-Alive requests:    10000
+Total transferred:      10516379 bytes
+HTML transferred:       7600000 bytes
+Requests per second:    3022.78 [#/sec] (mean)
+Time per request:       3.308 [ms] (mean)
+Time per request:       0.331 [ms] (mean, across all concurrent requests)
+Transfer rate:          3104.36 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    0   3.9      0     131
+Processing:     0    3   2.5      2     131
+Waiting:        0    3   2.5      2     131
+Total:          0    3   4.6      2     134
+
+Percentage of the requests served within a certain time (ms)
+  50%      2
+  66%      3
+  75%      4
+  80%      4
+  90%      6
+  95%      7
+  98%     10
+  99%     12
+ 100%    134 (longest request)
+[root@docker Breakout6]# 
