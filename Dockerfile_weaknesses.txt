@@ -1,0 +1,6 @@
+- Copy of the application source code to the container, we can instead connect to a repository and define version.
+- The use of self-signed certificate is not acceptable in production.
+- Default configurations for apache and haproxy servers, we can adjust important configurations with appropriate values using ENV variables.
+- The base image is not really minimal for the context of this application, may be alpine or other minimal image can be more suitable.
+- No user specified, means the container will run using root user and that means that the container has potentially root access on the host.
+- We can use Docker secret command to store sensitive files like SSL files but we are self-signed certificate here which is not security compliant.
